@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Papa ❤️</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+color:white;
+overflow-x:hidden;
+}
+
+#welcome{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:#000;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:999;
+text-align:center;
+padding:20px;
+}
+
+#welcome h1{
+font-size:2rem;
+margin-bottom:20px;
+}
+
+#openBtn{
+padding:15px 25px;
+border:none;
+border-radius:30px;
+font-size:1rem;
+cursor:pointer;
+background:gold;
+font-weight:bold;
+}
+
+.hidden{
+display:none !important;
+}
+
+.hero{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+padding:20px;
+}
+
+.hero h1{
+font-size:3rem;
+color:gold;
+margin-bottom:10px;
+}
+
+.hero p{
+font-size:1.1rem;
+max-width:600px;
+}
+
+.gallery{
+padding:40px 20px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.gallery img{
+width:100%;
+height:350px;
+object-fit:cover;
+border-radius:20px;
+box-shadow:0 0 20px rgba(255,255,255,0.2);
+transition:.4s;
+}
+
+.gallery img:hover{
+transform:scale(1.05);
+}
+
+.message{
+padding:40px 20px;
+text-align:center;
+max-width:800px;
+margin:auto;
+}
+
+.message h2{
+color:gold;
+margin-bottom:20px;
+}
+
+.message p{
+line-height:1.8;
+font-size:1.1rem;
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+pointer-events:none;
+z-index:1000;
+}
+
+audio{
+display:none;
+}
+
+@media(max-width:600px){
+.hero h1{
+font-size:2.2rem;
+}
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="confetti"></canvas>
+
+<!-- Surprise Screen -->
+<div id="welcome">
+<h1>🎁 A Surprise For Papa ❤️</h1>
+<button id="openBtn">Tap To Open Your Surprise ✨</button>
+</div>
+
+<!-- Birthday Song -->
+<audio id="song" loop>
+<source src="birthday.mp3" type="audio/mpeg">
+</audio>
+
+<section class="hero">
+<h1>🎂 Happy Birthday Papa ❤️</h1>
+<p>
+Thank you for always being our strength,
+our guide and our biggest support.
+May Allah bless you with happiness,
+good health and a long life.
+</p>
+</section>
+
+<section class="message">
+<h2>💌 A Message For You</h2>
+
+<p>
+Dear Papa,<br><br>
+
+Thank you for everything you do for us.
+Your love, sacrifices and hard work inspire us every day.
+
+You are not only our father but also our hero,
+our protector and our biggest blessing.
+
+May your life be filled with happiness,
+peace and endless smiles.
+
+❤️ Happy Birthday Papa ❤️
+</p>
+</section>
+
+<section class="gallery">
+<img src="sweet memories">
+<img src="sweet memories">
+<img src="sweet memories">
+<img src="sweet memories">
+<img src="sweet memories">
+<img src="sweet memories">
+</section>
+
+<script>
+const welcome=document.getElementById("welcome");
+const btn=document.getElementById("openBtn");
+const song=document.getElementById("song");
+
+btn.addEventListener("click",()=>{
+welcome.classList.add("hidden");
+song.play();
+burstConfetti();
+});
+
+// Confetti
+const canvas=document.getElementById("confetti");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let pieces=[];
+
+function burstConfetti(){
+for(let i=0;i<200;i++){
+pieces.push({
+x:window.innerWidth/2,
+y:window.innerHeight/2,
+r:Math.random()*6+2,
+dx:(Math.random()-0.5)*10,
+dy:(Math.random()-0.5)*10,
+color:`hsl(${Math.random()*360},100%,50%)`
+});
+}
+}
+
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+pieces.forEach((p,index)=>{
+p.x+=p.dx;
+p.y+=p.dy;
+p.dy+=0.05;
+
+ctx.fillStyle=p.color;
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fill();
+
+if(p.y>canvas.height){
+pieces.splice(index,1);
+}
+});
+
+requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+
+</body>
+</html>
